@@ -21,5 +21,10 @@
 @property(nonatomic, assign)CGFloat zl_centerX;
 @property(nonatomic, assign)CGFloat zl_centerY;
 
+- (void)setRoundViewWithCornerRaidus:(CGFloat)cornerRadius;
+/**
+ *  @判断view是否显示
+ */
+- (BOOL)isShowingOnKeyWindow;
 
 @end
