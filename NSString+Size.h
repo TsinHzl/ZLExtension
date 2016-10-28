@@ -12,7 +12,7 @@
 
 - (CGSize)sizeWithMaxSize:(CGSize)maxSize font:(CGFloat )font;
 
-+ (NSString *)cachePath;
++ (NSString *)cachePathWithFileName:(NSString *)filename;
 
 
 @end

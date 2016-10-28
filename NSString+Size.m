@@ -17,10 +17,10 @@
     return [self boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrsDic context:nil].size;
 }
 
-+ (NSString *)cachePath
++ (NSString *)cachePathWithFileName:(NSString *)filename
 {
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    path = [path stringByAppendingPathComponent:@"ca.plist"];
+    path = [path stringByAppendingPathComponent:filename];
     return path;
 }
 @end
