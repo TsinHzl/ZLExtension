@@ -11,7 +11,7 @@
 @implementation UIButton (ZLAImage)
 
 
-+ (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage color:(UIColor *)color highColor:(UIColor *)highColor
++ (instancetype)zl_imageWithImage:(NSString *)image highImage:(NSString *)highImage color:(UIColor *)color highColor:(UIColor *)highColor
 {
     if (!color) {
         color = [UIColor blackColor];
@@ -33,25 +33,25 @@
     return backBtn;
 }
 
-+ (instancetype)imageWithImage:(NSString *)image
++ (instancetype)zl_imageWithImage:(NSString *)image
 {
-    return [self imageWithImage:image highImage:nil];
+    return [self zl_imageWithImage:image highImage:nil];
 }
 
-+ (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage
++ (instancetype)zl_imageWithImage:(NSString *)image highImage:(NSString *)highImage
 {
-    return [self imageWithImage:image highImage:highImage color:nil highColor:nil];
+    return [self zl_imageWithImage:image highImage:highImage color:nil highColor:nil];
 }
 
 
-+ (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action
++ (instancetype)zl_imageWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action
 {
-    return [self imageWithImage:image highImage:highImage target:target action:action color:nil highColor:nil];
+    return [self zl_imageWithImage:image highImage:highImage target:target action:action color:nil highColor:nil];
 }
 
-+ (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action color:(UIColor *)color highColor:(UIColor *)highColor
++ (instancetype)zl_imageWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action color:(UIColor *)color highColor:(UIColor *)highColor
 {
-    UIButton *backBtn = [self imageWithImage:image highImage:highImage color:color highColor:highColor];
+    UIButton *backBtn = [self zl_imageWithImage:image highImage:highImage color:color highColor:highColor];
     [backBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return backBtn;
 }
