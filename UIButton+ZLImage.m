@@ -6,19 +6,24 @@
 //  Copyright © 2016年 MacTsin. All rights reserved.
 //
 
-#import "UIButton+ZLAImage.h"
+#import "UIButton+ZLImage.h"
 
 @implementation UIButton (ZLAImage)
 
+
 + (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage color:(UIColor *)color highColor:(UIColor *)highColor
 {
+    if (!color) {
+        color = [UIColor blackColor];
+    }
+    if (!highColor) {
+        highColor = [UIColor lightGrayColor];
+    }
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.zl_size = CGSizeMake(50, 30);
     [backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [backBtn setTitleColor:color forState:UIControlStateNormal];
-    if (highColor) {
-        [backBtn setTitleColor:highColor forState:UIControlStateHighlighted];
-    }
+    [backBtn setTitleColor:highColor forState:UIControlStateHighlighted];
     [backBtn setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
     if (highImage) {
         [backBtn setImage:[UIImage imageNamed:highImage] forState:UIControlStateHighlighted];
@@ -28,21 +33,25 @@
     return backBtn;
 }
 
++ (instancetype)imageWithImage:(NSString *)image
+{
+    return [self imageWithImage:image highImage:nil];
+}
+
++ (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage
+{
+    return [self imageWithImage:image highImage:highImage color:nil highColor:nil];
+}
+
+
++ (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action
+{
+    return [self imageWithImage:image highImage:highImage target:target action:action color:nil highColor:nil];
+}
+
 + (instancetype)imageWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action color:(UIColor *)color highColor:(UIColor *)highColor
 {
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.zl_size = CGSizeMake(50, 30);
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [backBtn setTitleColor:color forState:UIControlStateNormal];
-    if (highColor) {
-        [backBtn setTitleColor:highColor forState:UIControlStateHighlighted];
-    }
-    [backBtn setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
-    if (highImage) {
-        [backBtn setImage:[UIImage imageNamed:highImage] forState:UIControlStateHighlighted];
-    }
-    backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 0);
-    backBtn.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+    UIButton *backBtn = [self imageWithImage:image highImage:highImage color:color highColor:highColor];
     [backBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return backBtn;
 }
