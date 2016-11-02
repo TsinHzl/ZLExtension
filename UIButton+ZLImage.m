@@ -17,6 +17,20 @@
     return [self zl_imageButtonWithImage:image highImage:nil];
 }
 
++ (instancetype)zl_imageButtonWithImage:(NSString *)image target:(id)target action:(SEL)action
+{
+    UIButton *button = [self zl_imageButtonWithImage:image];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
++ (instancetype)zl_imageButtonWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action
+{
+    UIButton *button = [self zl_imageButtonWithImage:image highImage:highImage];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
 + (instancetype)zl_imageButtonWithImage:(NSString *)image highImage:(NSString *)highImage
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
