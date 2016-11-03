@@ -21,6 +21,7 @@
 {
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     path = [path stringByAppendingPathComponent:filename];
+    NSLog(@"路径---%@",path);
     return path;
 }
 @end
