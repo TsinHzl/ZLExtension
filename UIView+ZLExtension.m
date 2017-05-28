@@ -129,4 +129,34 @@
     
     return !self.isHidden && self.alpha > 0.01 && self.window == keyWindow && intersects;
 }
+
+/**
+ get和set view的右边线的值
+
+ @return  view右边线的值
+ */
+- (CGFloat)zl_rightLine
+{
+//    return self.zl_x + self.zl_width;
+    return CGRectGetMaxX(self.frame);
+}
+- (void)setZl_rightLine:(CGFloat)zl_rightLine
+{
+    self.zl_rightLine = zl_rightLine - self.zl_width;
+}
+
+/**
+ get和set view底部的线的值
+
+ @return  view的底部线的值
+ */
+- (CGFloat)zl_bottmLine
+{
+//    return self.zl_y + self.zl_height;
+    return CGRectGetMaxY(self.frame);
+}
+- (void)setZl_bottmLine:(CGFloat)zl_bottmLine
+{
+    self.zl_bottmLine = zl_bottmLine - self.zl_height;
+}
 @end
