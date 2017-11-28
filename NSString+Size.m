@@ -22,7 +22,21 @@
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     path = [path stringByAppendingPathComponent:filename];
     path = [path stringByAppendingString:@".plist"];
-    NSLog(@"路径---%@",path);
+    ZLLog(@"路径---%@",path);
     return path;
+}
+
+- (NSMutableAttributedString *)crossLine {
+    //添加中划线
+    NSDictionary *attribtDic = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc] initWithString:self attributes:attribtDic];
+    return attribtStr;
+}
+
+- (NSMutableAttributedString *)underLine {
+    //添加下划线
+    NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc] initWithString:self attributes:attribtDic];
+    return attribtStr;
 }
 @end

@@ -112,6 +112,10 @@
     
 }
 
+- (void)setRoundView {
+    [self setRoundViewWithCornerRaidus:self.zl_height/2.0];
+}
+
 /**
  *  @判断view是否显示
  */

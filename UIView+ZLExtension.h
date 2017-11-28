@@ -25,6 +25,7 @@
 @property(nonatomic, assign)CGFloat zl_bottmLine;
 
 - (void)setRoundViewWithCornerRaidus:(CGFloat)cornerRadius;
+- (void)setRoundView;
 /**
  *  @判断view是否显示
  */

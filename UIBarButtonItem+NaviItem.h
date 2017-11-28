@@ -12,4 +12,5 @@
 + (instancetype)itemWithImage:(NSString *)image highImage:(NSString *)highImage;
 
 + (instancetype)itemWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action;
++ (instancetype)itemWithImage:(NSString *)image highImage:(NSString *)highImage clickAction:(void(^)(UIButton *btn))clickAction;
 @end
