@@ -1,6 +1,5 @@
 //
 //  UIView+ZLExtension.m
-//  ITianCai
 //
 //  Created by hezhonglin on 16/8/12.
 //  Copyright © 2016年 zeb. All rights reserved.
@@ -107,15 +106,26 @@
 
 - (void)setRoundViewWithCornerRaidus:(CGFloat)cornerRadius
 {
-    self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = cornerRadius;
+//    [self zl_addRounderCornerWithRadius:cornerRadius size:self.zl_size];
     
+    self.layer.masksToBounds = YES;//self.clipsToBounds = YES;这两个是等同的
+    self.layer.cornerRadius = cornerRadius;
 }
 
 - (void)setRoundView {
     [self setRoundViewWithCornerRaidus:self.zl_height/2.0];
 }
 
+- (void)setBorderWithColor:(UIColor *)color {
+    self.layer.borderColor = color.CGColor;
+    self.layer.borderWidth = 0.5f;
+    self.layer.masksToBounds = YES;
+}
+
+
+- (void)setBorderWidth:(CGFloat)width {
+    self.layer.borderWidth = width;
+}
 /**
  *  @判断view是否显示
  */
@@ -146,7 +156,9 @@
 }
 - (void)setZl_rightLine:(CGFloat)zl_rightLine
 {
-    self.zl_rightLine = zl_rightLine - self.zl_width;
+    CGRect f = self.frame;
+    f.origin.x = zl_rightLine - self.zl_width;
+    self.frame = f;
 }
 
 /**
@@ -156,11 +168,75 @@
  */
 - (CGFloat)zl_bottmLine
 {
-//    return self.zl_y + self.zl_height;
     return CGRectGetMaxY(self.frame);
 }
 - (void)setZl_bottmLine:(CGFloat)zl_bottmLine
 {
-    self.zl_bottmLine = zl_bottmLine - self.zl_height;
+    CGRect f = self.frame;
+    f.origin.y = zl_bottmLine - self.zl_height;
+    self.frame = f;
 }
+
+
+#pragma mark - 高效设置圆角，这种不会触发离屏渲染,直接通过layer设置
+
+- (void)zl_addRounderCornerWithRadius:(CGFloat)radius size:(CGSize)size
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    CGContextRef cxt = UIGraphicsGetCurrentContext();
+
+    CGContextSetFillColorWithColor(cxt, self.backgroundColor.CGColor);
+    CGContextSetStrokeColorWithColor(cxt, self.backgroundColor.CGColor);
+
+    CGContextMoveToPoint(cxt, size.width, size.height-radius);
+    CGContextAddArcToPoint(cxt, size.width, size.height, size.width-radius, size.height, radius);//右下角
+    CGContextAddArcToPoint(cxt, 0, size.height, 0, size.height-radius, radius);//左下角
+    CGContextAddArcToPoint(cxt, 0, 0, radius, 0, radius);//左上角
+    CGContextAddArcToPoint(cxt, size.width, 0, size.width, radius, radius);//右上角
+    CGContextClosePath(cxt);
+    CGContextDrawPath(cxt, kCGPathFillStroke);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    [imageView setImage:image];
+    [self insertSubview:imageView atIndex:0];
+}
+
+/// 设置顶部两角为圆角的view
+/// @param cornerRadius radius
+/// @param bgColor 背景颜色
+- (CAShapeLayer *)zl_setTopCornerWithRadius:(CGFloat)cornerRadius bgColor:(UIColor *)bgColor {
+    CAShapeLayer *layer = CAShapeLayer.layer;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
+    layer.path = path.CGPath;
+    layer.fillColor = bgColor.CGColor;
+    [self.layer insertSublayer:layer atIndex:0];
+    return layer;
+}
+
+/// 设置底部两角为圆角的view
+/// @param cornerRadius radius
+/// @param bgColor 背景颜色
+- (CAShapeLayer *)zl_setBottomCornerWithRadius:(CGFloat)cornerRadius bgColor:(UIColor *)bgColor {
+    CAShapeLayer *layer = CAShapeLayer.layer;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
+    layer.path = path.CGPath;
+    layer.fillColor = bgColor.CGColor;
+    [self.layer insertSublayer:layer atIndex:0];
+    return layer;
+}
+
+/// 设置底部四角为圆角的view
+/// @param cornerRadius radius
+/// @param bgColor 背景颜色
+- (CAShapeLayer *)zl_setRoundCornerWithRadius:(CGFloat)cornerRadius bgColor:(UIColor *)bgColor {
+    CAShapeLayer *layer = CAShapeLayer.layer;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:cornerRadius];
+    layer.path = path.CGPath;
+    layer.fillColor = bgColor.CGColor;
+    [self.layer insertSublayer:layer atIndex:0];
+    return layer;
+}
+
 @end
